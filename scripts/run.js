@@ -3,6 +3,15 @@ async function main() {
     const waveContract = await waveContractFactory.deploy() //deploy
     await waveContract.deployed()
     console.log("Contract Address:", waveContract.address)
+
+    let count = await waveContract.getTotalWaves()
+    console.log(count.toNumber())
+
+    let waveTxn = await waveContract.wave()
+    await waveTxn.wait() // wait for txn to be mined
+
+    count = await waveContract.getTotalWaves()
+    console.log(count.toNumber())
 }
 
 

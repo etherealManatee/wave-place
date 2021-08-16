@@ -12,7 +12,7 @@ contract WavePortal {
     //this is a state changing function because it will change the variable and save it on to the blockchain
     function wave() public {
         totalWaves += 1;
-        console.log("%s waved", msg.sender);
+        console.log("%s waved", msg.sender); 
     }
 
     function getTotalWaves() view public returns (uint) {
