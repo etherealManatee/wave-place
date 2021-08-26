@@ -1,24 +1,43 @@
 async function main() {
+
     const [owner, randoPerson] = await ethers.getSigners();
+
     const waveContractFactory = await hre.ethers.getContractFactory("WavePortal") //compile
-    const waveContract = await waveContractFactory.deploy() //deploy
+    const waveContract = await waveContractFactory.deploy({value: hre.ethers.utils.parseEther("0.1")}) //deploy
     await waveContract.deployed()
     console.log("Contract Address:", waveContract.address)
     console.log("Contract deployed by:", owner.address)
 
-    let count = await waveContract.getTotalWaves()
-    // console.log(count.toNumber())
+    let contractBalance = await hre.ethers.provider.getBalance(waveContract.address)
+    console.log("Balance: ", hre.ethers.utils.formatEther(contractBalance))
 
-    let waveTxn = await waveContract.wave()
-    await waveTxn.wait() // wait for txn to be mined
+    let allWaves = await waveContract.getAllWaves()
+    console.log("current stored waves: ", allWaves)
 
-    count = await waveContract.getTotalWaves()
-    // console.log(count.toNumber())
-
-    waveTxn = await waveContract.connect(randoPerson).wave()
+    let waveTxn = await waveContract.wave("almostefficient, hello!")
     await waveTxn.wait()
 
-    count = await waveContract.getTotalWaves()
+    waveTxn = await waveContract.wave("zhiyang, hello!")
+    await waveTxn.wait()
+    
+    allWaves = await waveContract.getAllWaves()
+    console.log("current stored waves: ", allWaves)
+
+    contractBalance = await hre.ethers.provider.getBalance(waveContract.address)
+    console.log("Balance updated: ", hre.ethers.utils.formatEther(contractBalance))
+    // let count = await waveContract.getTotalWaves()
+    // // console.log(count.toNumber())
+
+    // let waveTxn = await waveContract.wave()
+    // await waveTxn.wait() // wait for txn to be mined
+
+    // count = await waveContract.getTotalWaves()
+    // // console.log(count.toNumber())
+
+    // waveTxn = await waveContract.connect(randoPerson).wave()
+    // await waveTxn.wait()
+
+    // count = await waveContract.getTotalWaves()
 
 }
 
