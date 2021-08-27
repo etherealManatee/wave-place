@@ -14,10 +14,13 @@ async function main() {
     let allWaves = await waveContract.getAllWaves()
     console.log("current stored waves: ", allWaves)
 
-    let waveTxn = await waveContract.wave("almostefficient, hello!")
+    let waveTxn = await waveContract.wave("1st wave, be a farmer")
     await waveTxn.wait()
 
-    waveTxn = await waveContract.wave("zhiyang, hello!")
+    waveTxn = await waveContract.wave("2nd wave, embody it")
+    await waveTxn.wait()
+
+    waveTxn = await waveContract.wave("3rd wave, own it")
     await waveTxn.wait()
     
     allWaves = await waveContract.getAllWaves()

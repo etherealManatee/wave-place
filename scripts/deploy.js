@@ -7,7 +7,8 @@ async function main() {
 
     const Token = await ethers.getContractFactory("WavePortal")
     const token = await Token.deploy({value: hre.ethers.utils.parseEther("0.1")})
-
+    await token.deployed()
+    
     console.log("WavePortal address:", token.address)
 }
 
